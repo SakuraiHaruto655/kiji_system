@@ -8,8 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('/kiji', [KijiController::class, 'show']);
-Route::post('/kiji/add',[KijiController::class,'add']);
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/kiji', [KijiController::class, 'show']);
+Route::post('/kiji/add',[KijiController::class,'add']);
