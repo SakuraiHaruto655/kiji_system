@@ -20,12 +20,7 @@
                 @foreach($kijis as $kiji)
                     <div class="card border-primary mb-4" style="max-width: 30rem;">
                     <div class="card-body text-primary">
-                        <h5 class="card-title">{{$kiji->title}}</h5>
-                        <p class="card-text">{{$kiji->body}} </p>
-                        <form method="POST" action="/kiji/detail/{{$kiji->id}}">
-                            @csrf
-                        <input type="submit" value="編集" class="btn btn-danger btn-sm">
-                        </form>
+                            <a href="/kiji/detail/{{$kiji->id}}">{{$kiji->title}}</a>
                         <form method="POST" action="/kiji/delete/{{$kiji->id}}">
                             @csrf
                             <input type="submit" value="削除" class="btn btn-danger btn-sm" onclick='return confirm("本当に削除しますか？");'>
