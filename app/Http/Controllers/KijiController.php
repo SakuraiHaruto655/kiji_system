@@ -13,7 +13,7 @@ class KijiController extends Controller
         return view('kiji.index',['kijis' => $kiji]);
     }
 
-    public function add($request){
+    public function add(Request $request){
 
         $user = Auth::user();
         $kiji = new Kiji;
@@ -22,6 +22,21 @@ class KijiController extends Controller
         $kiji->body = $request->input('body');
         $kiji->save();
 
-        return redirect()->to('/kiji');
+        return redirect()->route('show');
+    }
+
+    public function delete(Request $request){
+
+        $kiji = Kiji::find($request->id);
+        $kiji->delete();
+
+        return redirect()->route('show');
+    }
+
+    public function detail(Request $request){
+
+        $kiji = Kiji::find($request->id); 
+
+        return view('kiji.detail',['kijis' => $kiji]);
     }
 }
