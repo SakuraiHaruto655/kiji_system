@@ -10,7 +10,7 @@ class KijiController extends Controller
 {
     public function show(){
         $kiji = Kiji::all();
-        return view('kiji.index',['kijis' => $kiji]);
+        return view('home',['kijis' => $kiji]);
     }
 
     public function add(Request $request){
@@ -48,7 +48,24 @@ class KijiController extends Controller
         $kiji->title = $request->input('title');
         $kiji->body = $request->input('body');
         $kiji->save();
+        
+        return redirect()->route('complete_edit', ['id' => $kiji->id,'mode' => $request->input('mode')]);
+    }
 
-        return redirect()->route('detail',['id' => $kiji->id]);
+    public function complete(Request $request){
+        $kiji = Kiji::find($request->id);
+        if($kiji){
+            $mode = $request->input('mode');
+        }else{
+            echo '$kijiが存在しません。';
+            exit;
+        }
+        if ($mode === 'rev') {
+            return view('kiji.complete_edit', ['kiji' => $kiji,'mode'=>$mode]);
+        } elseif ($mode === 'add') {
+            return view('kiji.complete_add', ['kiji' => $kiji]);
+        } else {
+            return view('kiji.complete_default', ['kiji' => $kiji]);
+        }
     }
 }
