@@ -19,6 +19,10 @@
             <form method="GET" action="/kiji/edit/{{ $kiji->id }}">
                 <input type="submit" class="submit-button" value="編集">
             </form>
+            <form method="POST" action="/kiji/delete/{{ $kiji->id }}">
+                @csrf
+                <button type="submit" class="delete-button" onclick="return confirm('本当に削除しますか？');">削除</button>
+            </form>
         </div>
     </div>
 </div>

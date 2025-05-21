@@ -12,6 +12,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 Route::get('/home', [KijiController::class, 'show'])->name('show');
 Route::post('/kiji/add',[KijiController::class,'add']);
+Route::get('/kiji/create',[KijiController::class,'create']);
 Route::post('/kiji/delete/{id}',[KijiController::class,'delete']);
 Route::get('/kiji/detail/{id}',[KijiController::class,'detail'])->name('detail');
 Route::get('/kiji/edit/{id}',[KijiController::class,'edit']);

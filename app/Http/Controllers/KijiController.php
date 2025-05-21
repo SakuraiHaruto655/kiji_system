@@ -13,6 +13,10 @@ class KijiController extends Controller
         return view('home',['kijis' => $kiji]);
     }
 
+        public function create(){
+        return view('kiji/create');
+    }
+
     public function add(Request $request){
         $user = Auth::user();
         $kiji = new Kiji;
