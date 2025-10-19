@@ -16,7 +16,7 @@
         <ul class="navbar-nav">
             @if(Auth::check())
             <li class="nav-item">
-                <span class="user-label">ユーザー： {{ Auth::user()->name }}</span>
+                <span class="login-user">{{ Auth::user()->name }}さんログイン中</span>
             </li>
             <li class="nav-item">
                 <a href="/kiji/create" class="button">記事を作成する</a>

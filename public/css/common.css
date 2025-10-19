@@ -256,7 +256,7 @@ textarea {
 
 .user-label {
     display: inline-block;
-    background-color: #a9dbef;
+    background-color: #e5e5e5;
     color: #000000;
     padding: 8px 12px;
     border-radius: 20px;
@@ -270,7 +270,7 @@ textarea {
 .logout-button {
     display: inline-block;
     padding: 10px 15px;
-    background-color: #bcbcbc;
+    background-color: #8c8c8c;
     color: white;
     border: 1px solid #bcbcbc;
     border-radius: 5px;
@@ -286,4 +286,12 @@ textarea {
 
 .logout-button:hover {
     background-color: #bcbcbc;
+}
+
+.login-user {
+    display: inline-block;
+    padding: 10px 15px;
+    color: azure;
+    text-align: center;
+    font-size: 1.25em;
 }

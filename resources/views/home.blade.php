@@ -13,7 +13,7 @@
                 @if(isset($kijis) && $kijis->count() > 0)
                 @foreach($kijis as $kiji)
                 <div class="article-item">
-                    <span class="user-label">ユーザー： {{ Auth::user()->name }}</span>
+                    <span class="user-label">👤： {{ Auth::user()->name }}</span>
                     <div class="article-title">
                         <a href="/kiji/detail/{{ $kiji->id }}">{{ $kiji->title }}</a>
                     </div>
