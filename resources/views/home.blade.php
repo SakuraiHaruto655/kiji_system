@@ -1,21 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.common')
+
+@section('title', 'BLOGIFY')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+<div class="main-container">
+    <div class="column">
+        <div class="card">
+            <div class="card-header">
+                <h3>記事一覧</h3>
+            </div>
+            <div class="card-body">
+                @if(isset($kijis) && $kijis->count() > 0)
+                @foreach($kijis as $kiji)
+                <div class="article-item">
+                    <span class="user-label">👤： {{ Auth::user()->name }}</span>
+                    <div class="article-title">
+                        <a href="/kiji/detail/{{ $kiji->id }}">{{ $kiji->title }}</a>
+                    </div>
                 </div>
+                @endforeach
+                @else
+                <p>記事はありません。</p>
+                @endif
             </div>
         </div>
     </div>

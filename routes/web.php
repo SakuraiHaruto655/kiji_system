@@ -5,10 +5,17 @@ use App\Http\Controllers\KijiController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/kiji', [KijiController::class, 'show']);
+Route::middleware(['auth'])->group(function () {
+Route::get('/home', [KijiController::class, 'show'])->name('show');
 Route::post('/kiji/add',[KijiController::class,'add']);
+Route::get('/kiji/create',[KijiController::class,'create']);
+Route::post('/kiji/delete/{id}',[KijiController::class,'delete']);
+Route::get('/kiji/detail/{id}',[KijiController::class,'detail'])->name('detail');
+Route::get('/kiji/edit/{id}',[KijiController::class,'edit']);
+Route::post('/kiji/update/{id}',[KijiController::class,'update']);
+Route::get('/kiji/complete_edit/{id}',[KijiController::class,'complete'])->name('complete_edit');
+});
