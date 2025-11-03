@@ -9,6 +9,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/register/complete', function () {
+    return view('auth.register_complete');
+})->name('register.complete');
 Route::middleware(['auth'])->group(function () {
 Route::get('/home', [KijiController::class, 'show'])->name('show');
 Route::post('/kiji/add',[KijiController::class,'add']);
@@ -18,4 +21,10 @@ Route::get('/kiji/detail/{id}',[KijiController::class,'detail'])->name('detail')
 Route::get('/kiji/edit/{id}',[KijiController::class,'edit']);
 Route::post('/kiji/update/{id}',[KijiController::class,'update']);
 Route::get('/kiji/complete_edit/{id}',[KijiController::class,'complete'])->name('complete_edit');
+Route::get('/kiji/complete_delete', function () {
+    return view('kiji.complete_delete');
+})->name('complete_delete');
+Route::get('/kiji/complete_add', function () {
+    return view('kiji.complete_add');
+})->name('complete_add');
 });
