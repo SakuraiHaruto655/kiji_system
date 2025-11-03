@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="body">本文</label>
-                        <textarea id="body" name="body" rows="4" required></textarea>
+                        <textarea id="body" name="body" maxlength="255" rows="4" required></textarea>
                     </div>
                     <button type="submit" class="submit-button">投稿</button>
                 </form>

@@ -8,16 +8,34 @@ use Illuminate\Support\Facades\Auth;
 
 class KijiController extends Controller
 {
-    public function show(){
-        $kiji = Kiji::all();
-        return view('home',['kijis' => $kiji]);
+    public function show(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        $query = Kiji::query();
+
+        if (!empty($keyword)) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('title', 'like', "%{$keyword}%")
+                    ->orWhere('body', 'like', "%{$keyword}%");
+            });
+        }
+
+        $kijis = $query->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('home', [
+            'kijis' => $kijis,
+            'keyword' => $keyword,
+        ]);
     }
 
-        public function create(){
+    public function create()
+    {
         return view('kiji/create');
     }
 
-    public function add(Request $request){
+    public function add(Request $request)
+    {
         $user = Auth::user();
         $kiji = new Kiji;
         $kiji->user_id = $user->id;
@@ -25,47 +43,52 @@ class KijiController extends Controller
         $kiji->body = $request->input('body');
         $kiji->save();
 
-        return redirect()->route('show');
+        return redirect()->route('complete_add');
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $kiji = Kiji::find($request->id);
         $kiji->delete();
 
-        return redirect()->route('show');
+        return redirect()->route('complete_delete');
     }
 
-    public function detail(Request $request){
-        $kiji = Kiji::find($request->id); 
+    public function detail(Request $request)
+    {
+        $kiji = Kiji::with('user')->find($request->id);
 
-        return view('kiji.detail',['kiji' => $kiji]);
+        return view('kiji.detail', ['kiji' => $kiji]);
     }
 
-    public function edit(Request $request){
+    public function edit(Request $request)
+    {
         $kiji = Kiji::find($request->id);
 
-        return view('kiji.edit',compact('kiji'));
+        return view('kiji.edit', compact('kiji'));
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $kiji = Kiji::find($request->id);
         $kiji->title = $request->input('title');
         $kiji->body = $request->input('body');
         $kiji->save();
-        
-        return redirect()->route('complete_edit', ['id' => $kiji->id,'mode' => $request->input('mode')]);
+
+        return redirect()->route('complete_edit', ['id' => $kiji->id, 'mode' => $request->input('mode')]);
     }
 
-    public function complete(Request $request){
+    public function complete(Request $request)
+    {
         $kiji = Kiji::find($request->id);
-        if($kiji){
+        if ($kiji) {
             $mode = $request->input('mode');
-        }else{
+        } else {
             echo '$kijiが存在しません。';
             exit;
         }
         if ($mode === 'rev') {
-            return view('kiji.complete_edit', ['kiji' => $kiji,'mode'=>$mode]);
+            return view('kiji.complete_edit', ['kiji' => $kiji, 'mode' => $mode]);
         } elseif ($mode === 'add') {
             return view('kiji.complete_add', ['kiji' => $kiji]);
         } else {
